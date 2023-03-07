@@ -29,7 +29,15 @@ export const setCookie = (
 
 const callback = async (req: NextApiRequest, res: NextApiResponse) => {
   const code = req.query.code;
-  const spotify_redirect_uri = "http://localhost:3000/api/auth/callback";
+  
+  let spotify_redirect_uri: string = "";
+  if (process.env.SPOTIFY_REDIRECT_HOST) {
+    spotify_redirect_uri = process.env.SPOTIFY_REDIRECT_HOST + "/api/auth/callback";
+  } else {
+    console.error(
+      'Undefined Error: An environmental variable, "SPOTIFY_REDIRECT_HOST", has something wrong.'
+    );
+  }
 
   let spotify_client_id: string = "";
   if (process.env.SPOTIFY_CLIENT_ID) {
@@ -49,6 +57,8 @@ const callback = async (req: NextApiRequest, res: NextApiResponse) => {
     );
   }
 
+  console-log("spotify_redirect_uri: ", spotify_redirect_uri);
+  
   const params = new URLSearchParams({
     code: code as string,
     redirect_uri: spotify_redirect_uri,
