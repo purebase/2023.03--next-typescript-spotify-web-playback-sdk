@@ -57,7 +57,7 @@ const callback = async (req: NextApiRequest, res: NextApiResponse) => {
     );
   }
 
-  console-log("spotify_redirect_uri: ", spotify_redirect_uri);
+  console.log("spotify_redirect_uri: ", spotify_redirect_uri);
   
   const params = new URLSearchParams({
     code: code as string,
