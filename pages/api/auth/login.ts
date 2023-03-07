@@ -13,7 +13,18 @@ const generateRandomString = (length: number): string => {
 
 const login = (req: NextApiRequest, res: NextApiResponse) => {
   const scope: string = "streaming user-read-email user-read-private";
-  const spotify_redirect_uri = "http://localhost:3000/api/auth/callback";
+
+  // TODO Use document.location.origin
+  // const spotify_redirect_uri = "http://localhost:3000/api/auth/callback";
+  let spotify_redirect_uri: string = "";
+  if (process.env.SPOTIFY_REDIRECT_HOST) {
+    spotify_redirect_uri = process.env.SPOTIFY_REDIRECT_HOST + "/api/auth/callback";
+  } else {
+    console.error(
+        'Undefined Error: An environmental variable, "SPOTIFY_REDIRECT_HOST", has something wrong.'
+    );
+  }
+
   const state: string = generateRandomString(16);
 
   let spotify_client_id: string = "";

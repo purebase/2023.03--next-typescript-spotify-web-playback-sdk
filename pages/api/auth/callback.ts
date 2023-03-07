@@ -29,7 +29,8 @@ export const setCookie = (
 
 const callback = async (req: NextApiRequest, res: NextApiResponse) => {
   const code = req.query.code;
-  
+
+  // TODO Use document.location.origin
   let spotify_redirect_uri: string = "";
   if (process.env.SPOTIFY_REDIRECT_HOST) {
     spotify_redirect_uri = process.env.SPOTIFY_REDIRECT_HOST + "/api/auth/callback";
@@ -58,7 +59,7 @@ const callback = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   console.log("spotify_redirect_uri: ", spotify_redirect_uri);
-  
+
   const params = new URLSearchParams({
     code: code as string,
     redirect_uri: spotify_redirect_uri,
